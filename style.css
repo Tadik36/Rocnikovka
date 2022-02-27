@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+*
+{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    border:none;
+    background: linear-gradient(to right,purple,red,orange);
+}
+h1{
+    background: linear-gradient(to right, #f7971e, #ffd200);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    text-align: center;
+    font-size:9.0rem;
+    font-family: 'Bangers', serif;
+    letter-spacing:0.7rem;
+}
+#canvas{
+    position: absolute;
+    margin: 4px 2px;
+    font-size:25px;
+    text-align: center;
+    top:30%;
+    right: 50%;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-background-clip:text;
+    color: purple;
+}
+.modal {
+    position: fixed;
+    z-index: 1;
+    padding: 100px 16px 40px;
+    left: 25%;
+    top: 0;
+    width: 50%;
+    height: 50%;
+    overflow: auto;
+
+}
+.close {
+    float: right;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid black;
+    width: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+.modal-header{
+    padding: 1px 8px;
+}
+.modal-body {padding: 40px 16px;
+    width: 301.4px;
+    background-color: #5cb85c;
+    height: 541px;
+}
