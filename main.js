@@ -10,6 +10,8 @@ canvas.width = innerWidth/2;
 class Boundary{
     static width = 40
     static height = 40
+    width;
+    height;
     constructor({position}) {
         this.position = position
         this.width = 40;
@@ -59,8 +61,8 @@ const pacman = new Pacman({
         y: Boundary.height + Boundary.height/2
     },
     velocity: {
-        x: 40,
-        y: 40
+        x: 0,
+        y: 0
     }
 })
 
@@ -89,11 +91,8 @@ const animate = () => {
     })
     pacman.update()
 }
-
 animate()
-
-
-window.addEventListener('keydown',({ key }) => {
+addEventListener('keydown',({ key }) => {
     switch (key){
         case 'w':pacman.velocity.y = -5
             break;
