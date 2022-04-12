@@ -7,6 +7,11 @@
     border:none;
     background: linear-gradient(to right,purple,red,orange);
 }
+body{
+    justify-content: center;
+    overflow: hidden;
+    height: 100vh;
+}
 h1{
     background: linear-gradient(to right, #f7971e, #ffd200);
     -webkit-background-clip:text;
@@ -16,12 +21,15 @@ h1{
     font-family: 'Bangers', serif;
     letter-spacing:0.7rem;
 }
-#canvas{
+canvas{
+    background: black;
+}
+
+#myBtn{
     position: absolute;
     margin: 4px 2px;
     font-size:25px;
     text-align: center;
-    top:30%;
     right: 50%;
     display: inline-block;
     text-decoration: none;
@@ -29,15 +37,16 @@ h1{
     -webkit-background-clip:text;
     color: purple;
 }
+
 .modal {
     position: fixed;
     z-index: 1;
-    padding: 100px 16px 40px;
-    left: 25%;
-    top: 0;
-    width: 50%;
-    height: 50%;
+    left: 30%;
+    height:600px;
+    width:800px;
     overflow: auto;
+    display:none;
+
 
 }
 .close {
@@ -46,6 +55,16 @@ h1{
     font-weight: bold;
     cursor: pointer;
 }
+button{
+    transition-duration: 0.6s;
+    animation: none;
+}
+button:hover {
+    cursor: pointer;
+    transform: scale(1.05, 1.05);
+    transition-duration: 0.6s;
+}
+
 
 .modal-content {
     position: relative;
@@ -63,8 +82,17 @@ h1{
 .modal-header{
     padding: 1px 8px;
 }
-.modal-body {padding: 40px 16px;
-    width: 301.4px;
-    background-color: #5cb85c;
-    height: 541px;
+.modal-body {
+    padding: 4px 4px;
+}
+canvas{
+margin-left: 4px;
+    margin-right: 4px;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
