@@ -4,12 +4,12 @@ let modal = document.getElementById("myModal");
 let btn = document.getElementById("myBtn");
 let span = document.getElementsByClassName("close")[0];
 
-canvas.height =550;
-canvas.width = 770;
+canvas.height = innerHeight/2;
+canvas.width = innerWidth/2;
 
 class Boundary{
-    static width = 60
-    static height = 60
+    static width = 40
+    static height = 40
     constructor({position}) {
         this.position = position
         this.width = 40;
@@ -24,10 +24,10 @@ class Boundary{
 }
 
 class Pacman {
-    constructor(position,velocity) {
+    constructor({position, velocity}) {
             this.position = position
-            this.velocity =velocity
-            this.radius = 10
+            this.velocity = velocity;
+            this.radius =  15;
     }
     draw(){
         c.beginPath()
@@ -36,7 +36,14 @@ class Pacman {
         c.fill()
         c.closePath()
     }
+    update(){
+        this.draw()
+        this.position.x += this.velocity.x
+        this.position.y += this.velocity.y
+    }
+
 }
+
 
 const map = [
     ['-','-','-','-','-','-'],
@@ -49,14 +56,14 @@ const boundraries = []
 const pacman = new Pacman({
     position: {
         x: Boundary.width + Boundary.width/2,
-        y: Boundary.height + Boundary.width/2
+        y: Boundary.height + Boundary.height/2
     },
-    velocity:{
-    x:0,
-    y:0
-}
+    velocity: {
+        x: 40,
+        y: 40
+    }
 })
-pacman.draw()
+
 
 map.forEach((row,i) => {
     row.forEach((symbol,j) =>{
@@ -70,14 +77,35 @@ map.forEach((row,i) => {
                         }
                     })
                 )
+                break
         }
     })
 })
-boundraries.forEach((boundary) => {
-    boundary.draw();
+const animate = () => {
+    requestAnimationFrame(animate)
+    c.clearRect(0,0,canvas.width,canvas.height)
+    boundraries.forEach((boundary) => {
+        boundary.draw()
+    })
+    pacman.update()
+}
+
+animate()
+
+
+window.addEventListener('keydown',({ key }) => {
+    switch (key){
+        case 'w':pacman.velocity.y = -5
+            break;
+        case 's':pacman.velocity.y = 5
+            break;
+        case 'a':pacman.velocity.x = -5
+            break;
+        case 'd':pacman.velocity.x = 5
+            break;
+    }
+    console.log(pacman.velocity)
 })
-
-
 
 btn.onclick = function() {
     modal.style.display = "block";
@@ -90,3 +118,4 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+

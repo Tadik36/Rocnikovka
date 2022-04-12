@@ -23,6 +23,8 @@ h1{
 }
 canvas{
     background: black;
+    margin-left: 4px;
+    margin-right: 4px;
 }
 
 #myBtn{
@@ -42,10 +44,8 @@ canvas{
     position: fixed;
     z-index: 1;
     left: 30%;
-    height:600px;
-    width:800px;
     overflow: auto;
-    display:none;
+
 
 
 }
@@ -85,11 +85,6 @@ button:hover {
 .modal-body {
     padding: 4px 4px;
 }
-canvas{
-margin-left: 4px;
-    margin-right: 4px;
-}
-
 .close:hover,
 .close:focus {
     color: #000;
