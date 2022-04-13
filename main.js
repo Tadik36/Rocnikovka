@@ -2,20 +2,21 @@ const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 let modal = document.getElementById("myModal");
 let btn = document.getElementById("myBtn");
+import Pacman from "./pacman.js";
 let span = document.getElementsByClassName("close")[0];
 
 canvas.height = innerHeight/2;
 canvas.width = innerWidth/2;
 
 class Boundary{
-    static width = 40
-    static height = 40
+    static width = 30
+    static height = 30
     width;
     height;
     constructor({position}) {
         this.position = position
-        this.width = 40;
-        this.height = 40;
+        this.width = 30;
+        this.height = 30;
     }
 
 
@@ -25,34 +26,18 @@ class Boundary{
     }
 }
 
-class Pacman {
-    constructor({position, velocity}) {
-            this.position = position
-            this.velocity = velocity;
-            this.radius =  15;
-    }
-    draw(){
-        c.beginPath()
-        c.arc(this.position.x,this.position.y,this.radius, 0, Math.PI *2)
-        c.fillStyle = 'yellow'
-        c.fill()
-        c.closePath()
-    }
-    update(){
-        this.draw()
-        this.position.x += this.velocity.x
-        this.position.y += this.velocity.y
-    }
 
-}
 
 
 const map = [
-    ['-','-','-','-','-','-'],
-    ['-',' ',' ',' ',' ','-'],
-    ['-',' ','-','-',' ','-'],
-    ['-',' ',' ',' ',' ','-'],
-    ['-','-','-','-','-','-'],
+    ['-','-','-','-','-','-','-','-'],
+    ['-',' ',' ',' ',' ',' ',' ','-'],
+    ['-',' ','-',' ',' ','-',' ','-'],
+    ['-',' ',' ',' ',' ',' ',' ','-'],
+    ['-',' ',' ',' ',' ',' ',' ','-'],
+    ['-',' ','-',' ',' ','-',' ','-'],
+    ['-',' ',' ',' ',' ',' ',' ','-'],
+    ['-','-','-','-','-','-','-','-'],
 ]
 const boundraries = []
 const pacman = new Pacman({
@@ -66,7 +51,6 @@ const pacman = new Pacman({
     }
 })
 
-
 map.forEach((row,i) => {
     row.forEach((symbol,j) =>{
         switch (symbol){
@@ -74,8 +58,8 @@ map.forEach((row,i) => {
                 boundraries.push(
                     new Boundary({
                         position:{
-                            x:40*j,
-                            y:40*i
+                            x:30*j,
+                            y:30*i
                         }
                     })
                 )
