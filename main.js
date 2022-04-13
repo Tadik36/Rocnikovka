@@ -26,9 +26,6 @@ class Boundary{
     }
 }
 
-
-
-
 const map = [
     ['-','-','-','-','-','-','-','-'],
     ['-',' ',' ',' ',' ',' ',' ','-'],
@@ -67,6 +64,23 @@ map.forEach((row,i) => {
         }
     })
 })
+const keys={
+    w:{
+        pressed:false
+    },
+    a:{
+        pressed:false
+    },
+    s:{
+        pressed:false
+    },
+    d:{
+        pressed:false
+    }
+
+
+}
+
 const animate = () => {
     requestAnimationFrame(animate)
     c.clearRect(0,0,canvas.width,canvas.height)
@@ -74,20 +88,47 @@ const animate = () => {
         boundary.draw()
     })
     pacman.update()
+    pacman.velocity.y=0
+    pacman.velocity.x=0
+    if (keys.w.pressed){
+        pacman.velocity.y = -3
+    }else if (keys.a.pressed){
+        pacman.velocity.x = -3
+    }if (keys.d.pressed){
+        pacman.velocity.x = 3
+    }else if (keys.s.pressed){
+        pacman.velocity.y = 3
+    }
+
 }
 animate()
 addEventListener('keydown',({ key }) => {
     switch (key){
-        case 'w':pacman.velocity.y = -5
+        case 'w':keys.w.pressed = true
             break;
-        case 's':pacman.velocity.y = 5
+        case 's':keys.s.pressed = true
             break;
-        case 'a':pacman.velocity.x = -5
+        case 'a':keys.a.pressed = true
             break;
-        case 'd':pacman.velocity.x = 5
+        case 'd':keys.d.pressed = true
             break;
     }
-    console.log(pacman.velocity)
+    console.log(keys.d.pressed)
+    console.log(keys.s.pressed)
+})
+addEventListener('keyup',({ key }) => {
+    switch (key){
+        case 'w':keys.w.pressed = false
+            break;
+        case 's':keys.s.pressed = false
+            break;
+        case 'a':keys.a.pressed = false
+            break;
+        case 'd':keys.d.pressed = false
+            break;
+    }
+    console.log(keys.d.pressed)
+    console.log(keys.s.pressed)
 })
 
 btn.onclick = function() {
@@ -101,4 +142,5 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
 
