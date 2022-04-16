@@ -6,7 +6,7 @@ class Pacman
     {
         this.position = position
         this.velocity = velocity;
-        this.radius = 13;
+        this.radius = 12;
     }
     draw()
     {

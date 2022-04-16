@@ -1,27 +1,34 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
+const score = document.querySelector('#scoreL');
 let modal = document.getElementById("myModal");
 let btn = document.getElementById("myBtn");
 import Boundary from "./boundary.js";
 import Pacman from "./pacman.js";
 let span = document.getElementsByClassName("close")[0];
 
-canvas.height = innerHeight/2;
-canvas.width = innerWidth/2;
-
-
+canvas.height = 480;
+canvas.width = 960;
 
 const map = [
-    ['-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-'],
-    ['-','.',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-'],
-    ['-','.','-',' ',' ','-',' ',' ',' ',' ','-',' ',' ','-',' ','-'],
-    ['-','.',' ',' ',' ',' ',' ',' ','.',' ',' ',' ',' ',' ',' ','-'],
-    ['-','.',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-'],
-    ['-','.','-',' ',' ','-',' ',' ',' ',' ','-',' ',' ','-',' ','-'],
-    ['-',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','-'],
-    ['-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-'],
+    ['-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-'],
+    ['-','.','.','.','.','.','.','-','.','.','.','.','.','.','.','.','.','.','.','.','.','.','-','.','-','.','-','.','.','.','.','-'],
+    ['-','.','-','-','-','.','-','-','-','.','-','-','-','-','-','.','-','-','-','-','-','.','.','.','.','.','.','.','-','-','.','-'],
+    ['-','.','-','.','-','.','-','.','-','.','-',' ','.','.','.','.','-','.','.','.','.','.','-','-','-','-','-',' ','.','-','.','-'],
+    ['-','.','-','.','-','.','.','.','-','.','-','-','-','-','-','.','-','-','-','.','.','-',' ',' ',' ',' ',' ','-','.','.','.','-'],
+    ['-','.','-','.','-','.','-','-','-','.','.','.','.','.','.','.','.','.','.','.','-',' ',' ',' ',' ',' ',' ',' ','-',' ','.','-'],
+    ['-','.','.','.','-','.','.','.','.','.','-','-','-','-','-','.','-','-','-','.','.','-',' ',' ','-',' ',' ',' ',' ','-','.','-'],
+    ['-','.','-','.','.','.','-','-','-','.','-','.','-','.','-','.','-','.','-','-','.','.','-',' ',' ',' ',' ',' ',' ','-','.','-'],
+    ['-','.','-','.','-','-','-','.','.','.','-','.','-','.','-','.','-','.','-','.','-','.',' ',' ',' ',' ',' ',' ',' ','-','.','-'],
+    ['-','.','-','.','.','.','-','-','-','.','.','.','-','.','-','.','.','.',' ','.','.','.','-',' ',' ',' ',' ',' ',' ','-','.','-'],
+    ['-','-','-','.','-','.','.','.','.','.','-','.','.','.','-','.','-','.','-','.','.','-',' ',' ',' ',' ',' ',' ',' ','-','.','-'],
+    ['-','.','-','.','-','.','-','-','-','-','-','.','-','.','.','.','-','.','-','.','-',' ',' ',' ',' ',' ',' ',' ','-','.','.','-'],
+    ['-','.','-','.','-','.','-','.','.','-','.','.','-','.','-','.','-','-','-','.','.','-',' ',' ',' ',' ',' ','-','.','.','.','-'],
+    ['-','.','-','.','-','.','-','.','-','-','-','-','-','.','-','.','-','.','-','-','.','.','-','-','-','-','-','.','.','-','.','-'],
+    ['-','.','.','.','-','.','.','.','.','.','.','.','-','.','.','.','-','.',' ',' ','.','.','.','.','.','.','.','.','.','-','.','-'],
+    ['-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-','-'],
 ]
-class Dot {
+class dot {
     constructor({position}){
         this.position = position
         this.radius = 3;
@@ -63,7 +70,7 @@ map.forEach((row,i) => {
                 break
             case'.':
                 dots.push(
-                new Dot({
+                new dot({
                     position:{
                         x: j* Boundary.width + Boundary.width/2,
                         y: i* Boundary.height + Boundary.height/2
@@ -89,7 +96,7 @@ const keys={
     }
 }
 let lastKey = ''
-
+let score1 = 0;
 const animate = () => {
     requestAnimationFrame(animate)
     c.clearRect(0,0,canvas.width,canvas.height)
@@ -107,23 +114,26 @@ const animate = () => {
             pacman.velocity.x=0
         }
 })
-    dots.forEach((Dot) =>{
-        Dot.draw();
-    })
+    dots.forEach((dot,i) => {
+        dot.draw();
+        if (Math.hypot(dot.position.x - pacman.position.x,
+            dot.position.y - pacman.position.y) < dot.radius + pacman.radius){
+            dots.splice(i,1)
+            score1 += 10
+            score.innerHTML = score1
+        }
+
+            })
     pacman.update()
 
     if (keys.w.pressed && lastKey === 'w'){
-        pacman.velocity.y = -2
-        pacman.velocity.x = -0
+        pacman.velocity.y = -1
     }else if (keys.a.pressed&& lastKey === 'a'){
-        pacman.velocity.x = -2
-        pacman.velocity.y = 0
+        pacman.velocity.x = -1
     }if (keys.d.pressed&& lastKey === 'd'){
-        pacman.velocity.x = 2
-        pacman.velocity.y = 0
+        pacman.velocity.x = 1
     }else if (keys.s.pressed&& lastKey === 's'){
-        pacman.velocity.y = 2
-        pacman.velocity.x = 0
+        pacman.velocity.y = 1
     }
 }
 animate()
@@ -142,8 +152,6 @@ addEventListener('keydown',({ key }) => {
             lastKey = 'd'
             break;
     }
-    console.log(keys.d.pressed)
-    console.log(keys.s.pressed)
 })
 addEventListener('keyup',({ key }) => {
     switch (key){
@@ -156,8 +164,6 @@ addEventListener('keyup',({ key }) => {
         case 'd':keys.d.pressed = false
             break;
     }
-    console.log(keys.d.pressed)
-    console.log(keys.s.pressed)
 })
 
 btn.onclick = function() {

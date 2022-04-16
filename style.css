@@ -43,7 +43,7 @@ canvas{
 .modal {
     position: fixed;
     z-index: 1;
-    left: 30%;
+    left: 20%;
     overflow: auto;
 
 
