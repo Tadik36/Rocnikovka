@@ -45,9 +45,7 @@ canvas{
     z-index: 1;
     left: 20%;
     overflow: auto;
-
-
-
+    display: none;
 }
 .close {
     float: right;
