@@ -10,8 +10,6 @@ class Boundary{
         this.width = 30;
         this.height = 30;
     }
-
-
     draw(){
         c.fillStyle = 'blue'
         c.fillRect(this.position.x,this.position.y,this.width,this.height)
