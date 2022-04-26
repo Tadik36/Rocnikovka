@@ -1,29 +1,29 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
-import {circleWidth, boundraries, ghosts,pacman,animateid} from "./main.js";
-
-class Ghost{
-    static speed = 1
+import {circleWidth, boundraries, ghosts, pacman, animateid} from "./main.js";
+class Ghost {
     speed;
-    constructor({position,velocity,color ="red"})
-    {
+    static speed = 1;
+    constructor({position, velocity, color, image}) {
         this.position = position
         this.velocity = velocity;
         this.radius = 11.5;
         this.color = color
         this.prevCollisions = []
-        this.speed = 1.5
+        this.speed = 1
+        this.image = image
 
+    }
 
-    }draw() {
+    draw() {
         c.beginPath()
-        c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
+        c.drawImage(this.image, this.position.x, this.position.y)
         c.fillStyle = this.color
         c.fill()
         c.closePath()
     }
-    update()
-    {
+
+    update() {
         this.draw()
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
@@ -31,60 +31,69 @@ class Ghost{
 }
 
 export const Move = () => {
-    ghosts.forEach(ghost =>{
+    ghosts.forEach(ghost => {
         ghost.update();
-        if(
+        if (
             Math.hypot(ghost.position.x - pacman.position.x,
-                ghost.position.y-pacman.position.y)<ghost.radius+pacman.radius
-        ){
+                ghost.position.y - pacman.position.y) < ghost.radius + pacman.radius
+        ) {
             cancelAnimationFrame(animateid)
+            setTimeout(function () {
+                alert("You have lose!");
+            }, 500)
+            let newElement = document.createElement('div')
+            newElement.innerHTML = "You have lose"
+            document.body.appendChild(newElement)
         }
 
         const collisions = [];
-        boundraries.forEach(boundary=>{
-            if (!collisions.includes('left')&&circleWidth({
+        boundraries.forEach(boundary => {
+            if (!collisions.includes('left') && circleWidth({
                 circle: {
                     ...ghost,
                     velocity: {
-                        x:-1,
+                        x: -ghost.speed,
                         y: 0,
                     }
                 }, rectangle: boundary
             })
             ) {
                 collisions.push('left')
-            }if (!collisions.includes('right')&&circleWidth({
+            }
+            if (!collisions.includes('right') && circleWidth({
                 circle: {
                     ...ghost,
                     velocity: {
-                        x: 1,
+                        x: ghost.speed,
                         y: 0,
                     }
                 }, rectangle: boundary
             })
-            ){
+            ) {
                 collisions.push('right')
-            }if (!collisions.includes('up')&&circleWidth({
+            }
+            if (!collisions.includes('up') && circleWidth({
                 circle: {
                     ...ghost,
                     velocity: {
                         x: 0,
-                        y: -1,
+                        y: -ghost.speed,
                     }
                 }, rectangle: boundary
             })
-            ){
+            ) {
                 collisions.push('up')
-            }if (!collisions.includes('down')&&circleWidth({
+            }
+            if (!collisions.includes('down') && circleWidth({
                 circle: {
                     ...ghost,
                     velocity: {
                         x: 0,
-                        y: 1,
+                        y: ghost.speed,
                     }
                 }, rectangle: boundary
             })
-            ){
+            ) {
                 collisions.push('down')
             }
         })
@@ -104,28 +113,29 @@ export const Move = () => {
             const direction = pathways[Math.floor(Math.random() * pathways.length)]
             switch (direction) {
                 case'down' :
-                    ghost.velocity.y=1
-                    ghost.velocity.x=0
+                    ghost.velocity.y = ghost.speed
+                    ghost.velocity.x = 0
                     break
 
                 case'up' :
-                    ghost.velocity.y=-1
-                    ghost.velocity.x=0
+                    ghost.velocity.y = -ghost.speed
+                    ghost.velocity.x = 0
                     break
 
                 case'right' :
-                    ghost.velocity.y=0
-                    ghost.velocity.x=1
+                    ghost.velocity.y = 0
+                    ghost.velocity.x = ghost.speed
                     break
 
                 case'left' :
-                    ghost.velocity.y=0
-                    ghost.velocity.x=-1
+                    ghost.velocity.y = 0
+                    ghost.velocity.x = -ghost.speed
                     break
             }
             ghost.prevCollisions = []
-    }
+        }
     })
 
 }
+
 export default Ghost
