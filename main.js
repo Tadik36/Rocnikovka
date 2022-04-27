@@ -11,6 +11,7 @@ import Boundary from "./boundary.js";
 import Pacman from "./pacman.js";
 import Ghost from "./ghost.js";
 import {Move} from "./ghost.js";
+
 let span = document.getElementsByClassName("close")[0];
 canvas.height = 480;
 canvas.width = 960;
@@ -51,102 +52,101 @@ const map = [
     ['-', '.', '.', '.', '-', '.', '.', '.', '.', '.', '.', '.', '-', '.', '.', '.', '-', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '-'],
     ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
 ]
-    const f = () => {
-map.forEach((row, i) => {
-    row.forEach((symbol, j) => {
-        switch (symbol) {
-            case '-':
-                boundraries.push(
-                    new Boundary({
-                        position: {
-                            x: Boundary.width*j ,
-                            y: Boundary.height*i
-                        }
-                    })
-                )
-                break
-            case ';':
-                boundraries.push(
-                    new Boundary({
-                        position: {
-                            x: Boundary.width * j,
-                            y: Boundary.height * i,
-                        },color:'black'
-                    })
-                )
-                break
-            case'.':
-                dots.push(
-                    new dot({
-                        position: {
-                            x: j * Boundary.width + Boundary.width / 2,
-                            y: i * Boundary.height + Boundary.height / 2
-                        }
-                    })
-                )
-                break
-        }
+const f = () => {
+    map.forEach((row, i) => {
+        row.forEach((symbol, j) => {
+            switch (symbol) {
+                case '-':
+                    boundraries.push(
+                        new Boundary({
+                            position: {
+                                x: Boundary.width * j,
+                                y: Boundary.height * i
+                            }
+                        })
+                    )
+                    break
+                case ';':
+                    boundraries.push(
+                        new Boundary({
+                            position: {
+                                x: Boundary.width * j,
+                                y: Boundary.height * i,
+                            }, color: 'black'
+                        })
+                    )
+                    break
+                case'.':
+                    dots.push(
+                        new dot({
+                            position: {
+                                x: j * Boundary.width + Boundary.width / 2,
+                                y: i * Boundary.height + Boundary.height / 2
+                            }
+                        })
+                    )
+                    break
+            }
+        })
     })
-})
-    }
+}
 const imagei = new Image()
 imagei.src = './img/Background.png'
-const imagey= new Image()
+const imagey = new Image()
 imagey.src = './img/Ghost2.png'
-const imager= new Image()
+const imager = new Image()
 imager.src = './img/Ghost3.png'
-const imageo= new Image()
+const imageo = new Image()
 imageo.src = './img/Ghost4.png'
 
 
+export let ghosts = [
+    new Ghost({
+        position: {
+            x: Boundary.width * 26 + Boundary.width / 2,
+            y: Boundary.height * 8 + Boundary.height / 2
+        },
+        velocity: {
+            x: Ghost.speed,
+            y: 0
+        },
+        image: imagei
 
-    export let ghosts = [
-        new Ghost({
-            position: {
-                x: Boundary.width * 26 + Boundary.width / 2,
-                y: Boundary.height * 8 + Boundary.height / 2
-            },
-            velocity: {
-                x: Ghost.speed,
-                y: 0
-            },
-            image: imagei
-
-        }),
-        new Ghost({
-            position: {
-                x: Boundary.width * 27 + Boundary.width / 2,
-                y: Boundary.height * 8 + Boundary.height / 2
-            },
-            velocity: {
-                x: Ghost.speed,
-                y: 0
-            },
-            image: imagey
-        }),
-        new Ghost({
-            position: {
-                x: Boundary.width * 24 + Boundary.width / 2,
-                y: Boundary.height * 8 + Boundary.height / 2
-            },
-            velocity: {
-                x: -Ghost.speed,
-                y: 0
-            },
-            image: imager
-        }),
-        new Ghost({
-            position: {
-                x: Boundary.width * 25 + Boundary.width / 2,
-                y: Boundary.height * 8 + Boundary.height / 2
-            },
-            velocity: {
-                x: -Ghost.speed,
-                y: 0
-            },
-            image: imageo
-        })
-    ]
+    }),
+    new Ghost({
+        position: {
+            x: Boundary.width * 27 + Boundary.width / 2,
+            y: Boundary.height * 8 + Boundary.height / 2
+        },
+        velocity: {
+            x: Ghost.speed,
+            y: 0
+        },
+        image: imagey
+    }),
+    new Ghost({
+        position: {
+            x: Boundary.width * 24 + Boundary.width / 2,
+            y: Boundary.height * 8 + Boundary.height / 2
+        },
+        velocity: {
+            x: -Ghost.speed,
+            y: 0
+        },
+        image: imager
+    }),
+    new Ghost({
+        position: {
+            x: Boundary.width * 25 + Boundary.width / 2,
+            y: Boundary.height * 8 + Boundary.height / 2
+        },
+        velocity: {
+            x: -Ghost.speed,
+            y: 0
+        },
+        image: imageo
+    })
+]
 
 export const pacman = new Pacman({
     position: {
@@ -193,12 +193,11 @@ document.getElementById('start-button').onclick = function () {
 }
 
 export const animate = () => {
-    if (boelan1){
-       animateid = requestAnimationFrame(animate)
+    if (boelan1) {
+        animateid = requestAnimationFrame(animate)
     }
 
     if (dots.length === 0) {
-
         winningMessageTextElement.innerText = ` Wins!`
         winningMessageElement.classList.add('show')
         cancelAnimationFrame(animateid)
@@ -359,22 +358,22 @@ const reset = () => {
     f()
     pacman.position.x = Boundary.width + Boundary.width / 2
     pacman.position.y = Boundary.height + Boundary.height / 2
-    ghosts[0].position.x=Boundary.width * 26 + Boundary.width / 2
-    ghosts[0].position.y=Boundary.height * 8 + Boundary.height / 2
-    ghosts[0].velocity.x=Ghost.speed
-    ghosts[0].velocity.y=0
-    ghosts[1].position.x=Boundary.width * 27 + Boundary.width / 2
-    ghosts[1].position.y=Boundary.height * 8 + Boundary.height / 2
-    ghosts[1].velocity.x=Ghost.speed
-    ghosts[1].velocity.y=0
-    ghosts[2].position.x=Boundary.width * 25 + Boundary.width / 2
-    ghosts[2].position.y=Boundary.height * 8 + Boundary.height / 2
-    ghosts[2].velocity.x=-Ghost.speed
-    ghosts[2].velocity.y=0
-    ghosts[3].position.x=Boundary.width * 24 + Boundary.width / 2
-    ghosts[3].position.y=Boundary.height * 8 + Boundary.height / 2
-    ghosts[3].velocity.x=-Ghost.speed
-    ghosts[3].velocity.y=0
+    ghosts[0].position.x = Boundary.width * 26 + Boundary.width / 2
+    ghosts[0].position.y = Boundary.height * 8 + Boundary.height / 2
+    ghosts[0].velocity.x = Ghost.speed
+    ghosts[0].velocity.y = 0
+    ghosts[1].position.x = Boundary.width * 27 + Boundary.width / 2
+    ghosts[1].position.y = Boundary.height * 8 + Boundary.height / 2
+    ghosts[1].velocity.x = Ghost.speed
+    ghosts[1].velocity.y = 0
+    ghosts[2].position.x = Boundary.width * 25 + Boundary.width / 2
+    ghosts[2].position.y = Boundary.height * 8 + Boundary.height / 2
+    ghosts[2].velocity.x = -Ghost.speed
+    ghosts[2].velocity.y = 0
+    ghosts[3].position.x = Boundary.width * 24 + Boundary.width / 2
+    ghosts[3].position.y = Boundary.height * 8 + Boundary.height / 2
+    ghosts[3].velocity.x = -Ghost.speed
+    ghosts[3].velocity.y = 0
 
     animate()
 
