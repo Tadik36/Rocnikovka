@@ -5,14 +5,18 @@ class Boundary{
     static height = 30
     width;
     height;
-    constructor({position}) {
+    color;
+    constructor({position, color = 'blue'}) {
         this.position = position
         this.width = 30;
         this.height = 30;
+        this.color = color
     }
     draw(){
-        c.fillStyle = 'blue'
+        c.fillStyle = this.color
         c.fillRect(this.position.x,this.position.y,this.width,this.height)
+
     }
+
 }
 export default Boundary

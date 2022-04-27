@@ -1,26 +1,22 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 import {circleWidth, boundraries, ghosts, pacman, animateid} from "./main.js";
+const winningMessageElement = document.getElementById('winningMessage')
+const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
 class Ghost {
     speed;
     static speed = 1;
-    constructor({position, velocity, color, image}) {
+    constructor({position, velocity, image}) {
         this.position = position
         this.velocity = velocity;
         this.radius = 11.5;
-        this.color = color
         this.prevCollisions = []
         this.speed = 1
         this.image = image
 
     }
-
     draw() {
-        c.beginPath()
-        c.drawImage(this.image, this.position.x, this.position.y)
-        c.fillStyle = this.color
-        c.fill()
-        c.closePath()
+        c.drawImage(this.image, this.position.x-10, this.position.y-10)
     }
 
     update() {
@@ -37,15 +33,10 @@ export const Move = () => {
             Math.hypot(ghost.position.x - pacman.position.x,
                 ghost.position.y - pacman.position.y) < ghost.radius + pacman.radius
         ) {
+            winningMessageTextElement.innerText = ` Wins!`
+            winningMessageElement.classList.add('show')
             cancelAnimationFrame(animateid)
-            setTimeout(function () {
-                alert("You have lose!");
-            }, 500)
-            let newElement = document.createElement('div')
-            newElement.innerHTML = "You have lose"
-            document.body.appendChild(newElement)
         }
-
         const collisions = [];
         boundraries.forEach(boundary => {
             if (!collisions.includes('left') && circleWidth({

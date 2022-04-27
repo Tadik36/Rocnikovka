@@ -5,12 +5,10 @@
     padding:0;
     box-sizing:border-box;
     border:none;
-    background: linear-gradient(to right,purple,red,orange);
 }
-body{
-    justify-content: center;
-    overflow: hidden;
-    height: 100vh;
+html{
+    height: 100%;
+    background: linear-gradient(rgba(0, 189, 196, 0.6), rgba(134, 54, 164, 0.6));
 }
 h1{
     background: linear-gradient(to right, #f7971e, #ffd200);
@@ -41,15 +39,106 @@ canvas{
 }
 #start-button{
     text-align: center;
-
-
+    cursor: pointer;
+    position: absolute;
+    left: 41%;
+    top: 5px;
+    color: white;
+    outline: none;
+    width: 130px;
+    height: 40px;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    background: transparent;
 }
+
+.btn-6 {
+    background: rgb(247,150,192);
+    background: radial-gradient(circle, rgba(247,150,192,1) 0%, rgba(118,174,241,1) 100%);
+    line-height: 42px;
+    padding: 0;
+    border: none;
+}
+.btn-6 span {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.btn-6:before,
+.btn-6:after {
+    position: absolute;
+    content: "";
+    height: 0%;
+    width: 1px;
+    box-shadow:
+            -1px -1px 20px 0 rgba(255,255,255,1),
+            -4px -4px 5px 0 rgba(255,255,255,1),
+            7px 7px 20px 0 rgba(0,0,0,.4),
+            4px 4px 5px 0 rgba(0,0,0,.3);
+}
+.btn-6:before {
+    right: 0;
+    top: 0;
+    transition: all 500ms ease;
+}
+.btn-6:after {
+    left: 0;
+    bottom: 0;
+    transition: all 500ms ease;
+}
+.btn-6:hover{
+    background: transparent;
+    color: #76aef1;
+    box-shadow: none;
+}
+.btn-6:hover:before {
+    transition: all 500ms ease;
+    height: 100%;
+}
+.btn-6:hover:after {
+    transition: all 500ms ease;
+    height: 100%;
+}
+.btn-6 span:before,
+.btn-6 span:after {
+    position: absolute;
+    content: "";
+    box-shadow:
+            -1px -1px 20px 0px rgba(255,255,255,1),
+            -4px -4px 5px 0px rgba(255,255,255,1),
+            7px 7px 20px 0px rgba(0,0,0,.4),
+            4px 4px 5px 0px rgba(0,0,0,.3);
+}
+.btn-6 span:before {
+    left: 0;
+    top: 0;
+    width: 0%;
+    height: .5px;
+    transition: all 500ms ease;
+}
+.btn-6 span:after {
+    right: 0;
+    bottom: 0;
+    width: 0%;
+    height: .5px;
+    transition: all 500ms ease;
+}
+.btn-6 span:hover:before {
+    width: 100%;
+}
+.btn-6 span:hover:after {
+    width: 100%;
+}
+
 .modal {
     position: fixed;
     z-index: 1;
-    left: 20%;
+    left: 24%;
     overflow: auto;
     display: none;
+    outline: none;
+    border-radius: 10px;
 }
 .close {
     float: right;
@@ -66,16 +155,12 @@ button:hover {
     transform: scale(1.05, 1.05);
     transition-duration: 0.6s;
 }
-
-
 .modal-content {
     position: relative;
-    background-color: #fefefe;
     margin: auto;
     padding: 0;
-    border: 1px solid black;
-    width: 100%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    background: radial-gradient(circle, rgba(247,150,192,1) 0%, rgba(118,174,241,1) 100%);
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.4s;
     animation-name: animatetop;
@@ -83,7 +168,7 @@ button:hover {
 }
 .modal-header{
     padding: 1px 8px;
-    
+
 }
 .modal-body {
     padding: 4px 4px;
@@ -95,4 +180,36 @@ button:hover {
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+.winning-message {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .9);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    flex-direction: column;
+}
+
+.winning-message button {
+    font-size: 3rem;
+    background-color: white;
+    border: 1px solid black;
+    padding: .25em .5em;
+    cursor: pointer;
+}
+
+.winning-message button:hover {
+    background-color: black;
+    color: white;
+    border-color: white;
+}
+
+.winning-message.show {
+    display: flex;
 }
