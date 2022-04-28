@@ -296,6 +296,7 @@ export const animate = () => {
         if (Math.hypot(dot.position.x - pacman.position.x,
             dot.position.y - pacman.position.y) < dot.radius + pacman.radius) {
             dots.splice(i, 1)
+            score1 += 10
             score.innerHTML = score1
         }
     })
