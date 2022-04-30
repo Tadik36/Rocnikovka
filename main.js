@@ -365,7 +365,6 @@ export const reset = () => {
     }
     pacman.position.x = Boundary.width + Boundary.width / 2
     pacman.position.y = Boundary.height + Boundary.height / 2
-    pacman.velocity.x = 0
     ghosts[0].position.x = Boundary.width * 26 + Boundary.width / 2
     ghosts[0].position.y = Boundary.height * 8 + Boundary.height / 2
     ghosts[0].velocity.x = Ghost.speed
