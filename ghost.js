@@ -1,6 +1,6 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
-import {circleWidth, boundraries, ghosts, pacman, animateid} from "./main.js";
+import {circleWidth, boundraries, ghosts, pacman, animateid, animate, reset} from "./main.js";
 const winningMessageElement = document.getElementById('winningMessage')
 const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
 class Ghost {
@@ -32,15 +32,23 @@ export const Move = () => {
         if (
             Math.hypot(ghost.position.x - pacman.position.x,
                 ghost.position.y - pacman.position.y) < ghost.radius + pacman.radius
-        ) {
-            winningMessageTextElement.innerText = ` Wins!`
+        ) {if (pacman.life === 0){
+            pacman.life = pacman.life-1
+            reset()
+            winningMessageTextElement.innerText = ` GameOver!`
             winningMessageElement.classList.add('show')
             cancelAnimationFrame(animateid)
+            }else{
+            pacman.life = pacman.life-1
+            console.log(pacman.life)
+            cancelAnimationFrame(animateid)
+            reset()
+        }
         }
         const collisions = [];
         boundraries.forEach(boundary => {
             if (!collisions.includes('left') && circleWidth({
-                circle: {
+                entity: {
                     ...ghost,
                     velocity: {
                         x: -ghost.speed,
@@ -52,7 +60,7 @@ export const Move = () => {
                 collisions.push('left')
             }
             if (!collisions.includes('right') && circleWidth({
-                circle: {
+                entity: {
                     ...ghost,
                     velocity: {
                         x: ghost.speed,
@@ -64,7 +72,7 @@ export const Move = () => {
                 collisions.push('right')
             }
             if (!collisions.includes('up') && circleWidth({
-                circle: {
+                entity: {
                     ...ghost,
                     velocity: {
                         x: 0,
@@ -76,7 +84,7 @@ export const Move = () => {
                 collisions.push('up')
             }
             if (!collisions.includes('down') && circleWidth({
-                circle: {
+                entity: {
                     ...ghost,
                     velocity: {
                         x: 0,

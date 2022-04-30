@@ -91,7 +91,7 @@ const f = () => {
     })
 }
 const imagei = new Image()
-imagei.src = './img/Background.png'
+imagei.src = './img/Ghost.png'
 const imagey = new Image()
 imagey.src = './img/Ghost2.png'
 const imager = new Image()
@@ -176,18 +176,19 @@ const keys = {
 let lastKey = ' '
 let score1 = 0;
 
-export const circleWidth = ({circle, rectangle}) => {
-    const padding = Boundary.width / 2 - circle.radius - 1
-    return (circle.position.y - circle.radius + circle.velocity.y <= rectangle.position.y + rectangle.height + padding &&
-        circle.position.x + circle.radius + circle.velocity.x >= rectangle.position.x - padding &&
-        circle.position.y + circle.radius + circle.velocity.y >= rectangle.position.y - padding &&
-        circle.position.x - circle.radius + circle.velocity.x <= rectangle.position.x + rectangle.width + padding)
+export const circleWidth = ({entity, rectangle}) => {
+    const padding = Boundary.width / 2 - entity.radius - 1
+    return (entity.position.y - entity.radius + entity.velocity.y <= rectangle.position.y + rectangle.height + padding &&
+        entity.position.x + entity.radius + entity.velocity.x >= rectangle.position.x - padding &&
+        entity.position.y + entity.radius + entity.velocity.y >= rectangle.position.y - padding &&
+        entity.position.x - entity.radius + entity.velocity.x <= rectangle.position.x + rectangle.width + padding)
 }
 f()
 export let animateid;
 let boelan1 = false;
+let win = false
 
-document.getElementById('start-button').onclick = function () {
+document.getElementById('start-button').onclick = () => {
     startButton.disabled = true;
     boelan1 = true;
 }
@@ -200,6 +201,7 @@ export const animate = () => {
     if (dots.length === 0) {
         winningMessageTextElement.innerText = ` Wins!`
         winningMessageElement.classList.add('show')
+        win = true;
         cancelAnimationFrame(animateid)
     }
 
@@ -208,7 +210,7 @@ export const animate = () => {
         for (let i = 1; i < boundraries.length; i++) {
             const boundary = boundraries[i]
             if (circleWidth({
-                circle: {
+                entity: {
                     ...pacman,
                     velocity: {
                         x: 0,
@@ -227,7 +229,7 @@ export const animate = () => {
         for (let i = 0; i < boundraries.length; i++) {
             const boundary = boundraries[i]
             if (circleWidth({
-                circle: {
+                entity: {
                     ...pacman,
                     velocity: {
                         x: -1.5,
@@ -246,7 +248,7 @@ export const animate = () => {
         for (let i = 0; i < boundraries.length; i++) {
             const boundary = boundraries[i]
             if (circleWidth({
-                circle: {
+                entity: {
                     ...pacman,
                     velocity: {
                         x: 1.5,
@@ -264,7 +266,7 @@ export const animate = () => {
         for (let i = 0; i < boundraries.length; i++) {
             const boundary = boundraries[i]
             if (circleWidth({
-                circle: {
+                entity: {
                     ...pacman,
                     velocity: {
                         x: 0,
@@ -283,7 +285,7 @@ export const animate = () => {
     boundraries.forEach((boundary) => {
         boundary.draw()
         if (circleWidth({
-                circle: pacman,
+            entity: pacman,
                 rectangle: boundary
             }
         )) {
@@ -342,21 +344,25 @@ addEventListener('keyup', ({key}) => {
     }
 })
 
-btn.onclick = function () {
+btn.onclick = () => {
     modal.style.display = "block";
 }
-span.onclick = function () {
+span.onclick = () => {
     modal.style.display = "none";
 }
-window.onclick = function (event) {
+window.onclick = (event) =>{
     if (event.target === modal) {
         modal.style.display = "none";
     }
 }
-const reset = () => {
+export const reset = () => {
     winningMessageElement.classList.remove('show')
-    score1 = 0;
-    f()
+    if (pacman.life === -1 || win ){
+        f()
+        score1 = 0
+        pacman.life = 2
+        win = false
+    }
     pacman.position.x = Boundary.width + Boundary.width / 2
     pacman.position.y = Boundary.height + Boundary.height / 2
     ghosts[0].position.x = Boundary.width * 26 + Boundary.width / 2
@@ -375,12 +381,10 @@ const reset = () => {
     ghosts[3].position.y = Boundary.height * 8 + Boundary.height / 2
     ghosts[3].velocity.x = -Ghost.speed
     ghosts[3].velocity.y = 0
-
     animate()
-
     startButton.disabled = false;
     boelan1 = false;
-    cancelAnimationFrame(animate)
+
 }
 animate()
 restartButton.addEventListener('click', reset)

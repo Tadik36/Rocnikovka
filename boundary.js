@@ -6,7 +6,7 @@ class Boundary{
     width;
     height;
     color;
-    constructor({position, color = 'blue'}) {
+    constructor({position, color = 'rgb(118,174,241,1)' }) {
         this.position = position
         this.width = 30;
         this.height = 30;
@@ -15,7 +15,6 @@ class Boundary{
     draw(){
         c.fillStyle = this.color
         c.fillRect(this.position.x,this.position.y,this.width,this.height)
-
     }
 
 }
