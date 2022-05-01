@@ -6,13 +6,13 @@ const winningMessageElement = document.getElementById('winningMessage')
 const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
 class Ghost {
     speed;
-    static speed = 1;
+    static speed = 2.5;
     constructor({position, velocity, image}) {
         this.position = position
         this.velocity = velocity;
         this.radius = 11.5;
         this.prevCollisions = []
-        this.speed = 1
+        this.speed = 2.5
         this.image = image
 
     }

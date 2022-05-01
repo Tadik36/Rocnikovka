@@ -11,26 +11,13 @@ const startButton = document.querySelector('#start-button');
 import Boundary from "./boundary.js";
 import Pacman from "./pacman.js";
 import Ghost from "./ghost.js";
+import dot from "./dot.js";
 import {Move} from "./ghost.js";
 
 let span = document.getElementsByClassName("close")[0];
 canvas.height = 480;
 canvas.width = 960;
 
-class dot {
-    constructor({position}) {
-        this.position = position
-        this.radius = 3;
-    }
-
-    draw() {
-        c.beginPath()
-        c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
-        c.fillStyle = 'white'
-        c.fill()
-        c.closePath()
-    }
-}
 
 
 const dots = []
@@ -217,14 +204,14 @@ export const animate = () => {
                     ...pacman,
                     velocity: {
                         x: 0,
-                        y: -1.5,
+                        y: -pacman.speed,
                     }
                 }, rectangle: boundary
             })) {
                 pacman.velocity.y = 0
                 break
             } else {
-                pacman.velocity.y = -1.5
+                pacman.velocity.y = -pacman.speed
             }
         }
 
@@ -235,7 +222,7 @@ export const animate = () => {
                 entity: {
                     ...pacman,
                     velocity: {
-                        x: -1.5,
+                        x: -pacman.speed,
                         y: 0,
                     }
                 }, rectangle: boundary
@@ -243,7 +230,7 @@ export const animate = () => {
                 pacman.velocity.x = 0
                 break
             } else {
-                pacman.velocity.x = -1.5
+                pacman.velocity.x = -pacman.speed
             }
         }
     }
@@ -254,7 +241,7 @@ export const animate = () => {
                 entity: {
                     ...pacman,
                     velocity: {
-                        x: 1.5,
+                        x: pacman.speed,
                         y: 0,
                     }
                 }, rectangle: boundary
@@ -262,7 +249,7 @@ export const animate = () => {
                 pacman.velocity.x = 0
                 break
             } else {
-                pacman.velocity.x = 1.5
+                pacman.velocity.x = pacman.speed
             }
         }
     } else if (keys.s.pressed && lastKey === 's') {
@@ -273,14 +260,14 @@ export const animate = () => {
                     ...pacman,
                     velocity: {
                         x: 0,
-                        y: 1.5,
+                        y: pacman.speed,
                     }
                 }, rectangle: boundary
             })) {
                 pacman.velocity.y = 0
                 break
             } else {
-                pacman.velocity.y = 1.5
+                pacman.velocity.y = pacman.speed
             }
         }
     }

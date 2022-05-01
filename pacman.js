@@ -3,6 +3,7 @@ const c = canvas.getContext('2d');
 
 class Pacman
 {
+     speed = 3
     constructor({position, velocity})
     {
         this.position = position
@@ -10,11 +11,11 @@ class Pacman
         this.radius = 11.5;
         this.life = 2
         this.rotate = 0
+        this.speed = 3
         this.MaxOpen= 0.75
         this.MinOpen = 0.12
 
     }
-
     draw() {
         c.save()
         c.translate(this.position.x, this.position.y)
@@ -32,7 +33,7 @@ class Pacman
         this.draw()
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
-        if (this.MaxOpen < 0 || this.MaxOpen > .75 )this.MinOpen = -this.MinOpen
+        if (this.MaxOpen < 0 || this.MaxOpen > 0.75 )this.MinOpen = -this.MinOpen
             this.MaxOpen += this.MinOpen
     }
 }
