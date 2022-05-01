@@ -1,6 +1,7 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 import {circleWidth, boundraries, ghosts, pacman, animateid, animate, reset} from "./main.js";
+const life1 = document.getElementById('lives')
 const winningMessageElement = document.getElementById('winningMessage')
 const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
 class Ghost {
@@ -39,6 +40,7 @@ export const Move = () => {
             winningMessageElement.classList.add('show')
             cancelAnimationFrame(animateid)
             }else{
+            life1.innerHTML = "Lives: "+ pacman.life
             pacman.life = pacman.life-1
             console.log(pacman.life)
             cancelAnimationFrame(animateid)

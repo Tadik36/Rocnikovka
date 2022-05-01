@@ -3,6 +3,7 @@ const c = canvas.getContext('2d');
 const score = document.querySelector('#scoreL');
 let modal = document.getElementById("myModal");
 let btn = document.getElementById("myBtn");
+const life1 = document.getElementById('lives')
 const winningMessageElement = document.getElementById('winningMessage')
 const restartButton = document.getElementById('restartButton')
 const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
@@ -90,14 +91,14 @@ const f = () => {
         })
     })
 }
-const imagei = new Image()
-imagei.src = './img/Ghost.png'
-const imagey = new Image()
-imagey.src = './img/Ghost2.png'
-const imager = new Image()
-imager.src = './img/Ghost3.png'
-const imageo = new Image()
-imageo.src = './img/Ghost4.png'
+const image1 = new Image()
+image1.src = './img/Ghost.png'
+const image2 = new Image()
+image2.src = './img/Ghost2.png'
+const image3 = new Image()
+image3.src = './img/Ghost3.png'
+const image4 = new Image()
+image4.src = './img/Ghost4.png'
 
 
 export let ghosts = [
@@ -110,7 +111,7 @@ export let ghosts = [
             x: Ghost.speed,
             y: 0
         },
-        image: imagei
+        image: image1
 
     }),
     new Ghost({
@@ -122,7 +123,7 @@ export let ghosts = [
             x: Ghost.speed,
             y: 0
         },
-        image: imagey
+        image: image2
     }),
     new Ghost({
         position: {
@@ -133,7 +134,7 @@ export let ghosts = [
             x: -Ghost.speed,
             y: 0
         },
-        image: imager
+        image: image3
     }),
     new Ghost({
         position: {
@@ -144,9 +145,11 @@ export let ghosts = [
             x: -Ghost.speed,
             y: 0
         },
-        image: imageo
+        image: image4
     })
 ]
+
+
 
 export const pacman = new Pacman({
     position: {
@@ -304,6 +307,10 @@ export const animate = () => {
     })
     pacman.update()
     Move()
+    if (pacman.velocity.x > 0 ) pacman.rotate = 0
+    else if (pacman.velocity.x < 0 ) pacman.rotate = Math.PI
+    else if (pacman.velocity.y > 0 ) pacman.rotate =Math.PI/2
+    else if(pacman.velocity.y < 0 ) pacman.rotate =Math.PI* 1.5
 }
 
 
@@ -312,18 +319,22 @@ addEventListener('keydown', ({key}) => {
         case 'w':
             keys.w.pressed = true
             lastKey = 'w'
+
             break;
         case 's':
             keys.s.pressed = true
             lastKey = 's'
+
             break;
         case 'a':
             keys.a.pressed = true
             lastKey = 'a'
+
             break;
         case 'd':
             keys.d.pressed = true
             lastKey = 'd'
+
             break;
     }
 })
@@ -362,6 +373,8 @@ export const reset = () => {
         score1 = 0
         pacman.life = 2
         win = false
+        const rom = pacman.life+1
+        life1.innerHTML = "Lives: "+ rom
     }
     pacman.position.x = Boundary.width + Boundary.width / 2
     pacman.position.y = Boundary.height + Boundary.height / 2
